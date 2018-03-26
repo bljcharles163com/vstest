@@ -49,6 +49,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities
                 {
                     this.writer.Write(data);
                     this.writer.Flush();
+                    EqtTrace.Verbose("LengthPrefixCommunicationChannel.Send: wrote data :{0}", data);
                 }
             }
             catch (Exception ex)
