@@ -41,12 +41,14 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities
         /// <inheritdoc />
         public Task Send(string data)
         {
+            EqtTrace.Verbose("LengthPrefixCommunicationChannel.Send: method start: {0}", data);
             try
             {
                 // Writing Message on binarywriter is not Thread-Safe
                 // Need to sync one by one to avoid buffer corruption
                 lock (this.writeSyncObject)
                 {
+                    EqtTrace.Verbose("LengthPrefixCommunicationChannel.Send: start write data :{0}", data);
                     this.writer.Write(data);
                     this.writer.Flush();
                     EqtTrace.Verbose("LengthPrefixCommunicationChannel.Send: wrote data :{0}", data);
@@ -58,6 +60,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities
                 throw new CommunicationException("Unable to send data over channel.", ex);
             }
 
+            EqtTrace.Verbose("LengthPrefixCommunicationChannel.Send: method end: {0}", data);
             return Task.FromResult(0);
         }
 
